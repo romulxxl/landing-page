@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { X, Zap, Mail, Lock, User, Phone, Building, CheckCircle, Play, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useModal } from "./ModalContext";
 
 function Backdrop({ onClick }: { onClick: () => void }) {
@@ -17,12 +17,43 @@ function Backdrop({ onClick }: { onClick: () => void }) {
   );
 }
 
-function ModalWrapper({ children, onClose }: { children: React.ReactNode; onClose: () => void }) {
+function ModalWrapper({
+  children,
+  onClose,
+  ariaLabel,
+}: {
+  children: React.ReactNode;
+  onClose: () => void;
+  ariaLabel: string;
+}) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    previousFocusRef.current = document.activeElement as HTMLElement;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    dialogRef.current?.focus();
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+      previousFocusRef.current?.focus();
+    };
+  }, [onClose]);
+
   return (
     <>
       <Backdrop onClick={onClose} />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
         <motion.div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={ariaLabel}
+          tabIndex={-1}
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -52,11 +83,11 @@ function LoginModal() {
   };
 
   return (
-    <ModalWrapper onClose={close}>
+    <ModalWrapper onClose={close} ariaLabel="Sign in to your account">
       <div className="max-w-md mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-br from-indigo-500 to-purple-600 px-8 pt-8 pb-6 text-white relative">
-          <button onClick={close} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+          <button onClick={close} aria-label="Close" className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors">
             <X className="w-4 h-4" />
           </button>
           <div className="flex items-center gap-2 mb-3">
@@ -72,11 +103,11 @@ function LoginModal() {
         <div className="px-8 py-6">
           {done ? (
             <div className="text-center py-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-9 h-9 text-green-500" />
+              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-9 h-9 text-indigo-500" />
               </div>
-              <p className="text-gray-900 font-semibold text-lg">Signed in successfully!</p>
-              <p className="text-gray-500 text-sm mt-1">Redirecting to your dashboard...</p>
+              <p className="text-gray-900 font-semibold text-lg">Demo mode</p>
+              <p className="text-gray-500 text-sm mt-1">This is a preview. Authentication will be available soon.</p>
               <button onClick={close} className="mt-4 text-indigo-500 hover:underline text-sm">Close</button>
             </div>
           ) : (
@@ -168,10 +199,10 @@ function SignupModal() {
   };
 
   return (
-    <ModalWrapper onClose={close}>
+    <ModalWrapper onClose={close} ariaLabel="Create your account">
       <div className="max-w-md mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="bg-gradient-to-br from-indigo-500 to-purple-600 px-8 pt-8 pb-6 text-white relative">
-          <button onClick={close} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors">
+          <button onClick={close} aria-label="Close" className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors">
             <X className="w-4 h-4" />
           </button>
           <div className="flex items-center gap-2 mb-3">
@@ -190,11 +221,11 @@ function SignupModal() {
         <div className="px-8 py-6">
           {done ? (
             <div className="text-center py-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-9 h-9 text-green-500" />
+              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-9 h-9 text-indigo-500" />
               </div>
-              <p className="text-gray-900 font-semibold text-lg">Account created!</p>
-              <p className="text-gray-500 text-sm mt-1">Check your email to verify your account.</p>
+              <p className="text-gray-900 font-semibold text-lg">Demo mode</p>
+              <p className="text-gray-500 text-sm mt-1">This is a preview. Account creation will be available soon.</p>
               <button onClick={close} className="mt-4 bg-indigo-500 text-white px-6 py-2 rounded-xl text-sm font-medium hover:bg-indigo-600 transition-colors">
                 Got it
               </button>
@@ -221,7 +252,7 @@ function SignupModal() {
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input type="password" required placeholder="Min. 8 characters" value={password} onChange={(e) => setPassword(e.target.value)}
+                  <input type="password" required minLength={8} placeholder="Min. 8 characters" value={password} onChange={(e) => setPassword(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all" />
                 </div>
               </div>
@@ -254,11 +285,11 @@ function SignupModal() {
 
 /* ─── DEMO MODAL ─── */
 function DemoModal() {
-  const { close } = useModal();
+  const { close, openSignup } = useModal();
   const [playing, setPlaying] = useState(false);
 
   return (
-    <ModalWrapper onClose={close}>
+    <ModalWrapper onClose={close} ariaLabel="Product demo video">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <div className="flex items-center gap-2">
@@ -267,7 +298,7 @@ function DemoModal() {
             </div>
             <span className="font-bold text-gray-900">Flowly Product Demo</span>
           </div>
-          <button onClick={close} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-500">
+          <button onClick={close} aria-label="Close" className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-500">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -296,6 +327,7 @@ function DemoModal() {
               </div>
               <button
                 onClick={() => setPlaying(true)}
+                aria-label="Play demo video"
                 className="relative z-10 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform group"
               >
                 <Play className="w-8 h-8 text-indigo-500 ml-1 group-hover:text-indigo-600" />
@@ -319,7 +351,7 @@ function DemoModal() {
             <p className="text-sm text-gray-500">Set up your workspace in under 2 minutes.</p>
           </div>
           <button
-            onClick={() => { close(); }}
+            onClick={() => { close(); setTimeout(() => openSignup(), 300); }}
             className="flex-shrink-0 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-2.5 rounded-xl transition-all hover:shadow-lg hover:shadow-indigo-100 flex items-center gap-2"
           >
             Start for free <ArrowRight className="w-4 h-4" />
@@ -337,7 +369,7 @@ function ContactModal() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
-  const set = (field: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const set = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [field]: e.target.value }));
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -347,10 +379,10 @@ function ContactModal() {
   };
 
   return (
-    <ModalWrapper onClose={close}>
+    <ModalWrapper onClose={close} ariaLabel="Contact sales form">
       <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
         <div className="bg-gradient-to-br from-gray-900 to-gray-800 px-8 pt-8 pb-6 text-white relative">
-          <button onClick={close} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+          <button onClick={close} aria-label="Close" className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors">
             <X className="w-4 h-4" />
           </button>
           <div className="flex items-center gap-2 mb-3">
@@ -366,11 +398,11 @@ function ContactModal() {
         <div className="px-8 py-6">
           {done ? (
             <div className="text-center py-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-9 h-9 text-green-500" />
+              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-9 h-9 text-indigo-500" />
               </div>
-              <p className="text-gray-900 font-semibold text-lg">Message sent!</p>
-              <p className="text-gray-500 text-sm mt-1">Our sales team will reach out within 24 hours.</p>
+              <p className="text-gray-900 font-semibold text-lg">Demo mode</p>
+              <p className="text-gray-500 text-sm mt-1">This is a preview. Message sending will be available soon.</p>
               <button onClick={close} className="mt-4 bg-indigo-500 text-white px-6 py-2 rounded-xl text-sm font-medium hover:bg-indigo-600 transition-colors">
                 Close
               </button>

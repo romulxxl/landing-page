@@ -5,11 +5,11 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 
 const companies = [
-  { name: "Stripe", initials: "ST" },
-  { name: "Notion", initials: "NT" },
-  { name: "Vercel", initials: "VC" },
-  { name: "Linear", initials: "LN" },
-  { name: "Figma", initials: "FG" },
+  { name: "Acmeco", initials: "AC" },
+  { name: "Globex", initials: "GX" },
+  { name: "Initech", initials: "IT" },
+  { name: "Soylent", initials: "SL" },
+  { name: "Umbrella", initials: "UM" },
 ];
 
 export default function SocialProof() {

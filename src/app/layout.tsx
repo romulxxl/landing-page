@@ -5,8 +5,22 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Flowly",
-  description: "Landing page",
+  title: "Flowly — Project Management for Remote Teams",
+  description:
+    "Flowly brings your remote team together with smart task management, real-time collaboration, and beautiful dashboards.",
+  openGraph: {
+    title: "Flowly — Project Management for Remote Teams",
+    description:
+      "Smart task management, real-time collaboration, and beautiful dashboards — all in one place.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flowly — Project Management for Remote Teams",
+    description:
+      "Smart task management, real-time collaboration, and beautiful dashboards — all in one place.",
+  },
 };
 
 export default function RootLayout({
