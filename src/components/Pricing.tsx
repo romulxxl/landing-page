@@ -145,16 +145,20 @@ export default function Pricing() {
                 <p className={`text-sm mb-4 ${plan.highlight ? "text-indigo-200" : "text-gray-500"}`}>
                   {plan.description}
                 </p>
-                <div className="flex items-end gap-1">
+                {plan.price.monthly === 0 ? (
                   <span className={`text-5xl font-extrabold ${plan.highlight ? "text-white" : "text-gray-900"}`}>
-                    ${annual ? plan.price.annual : plan.price.monthly}
+                    Free
                   </span>
-                  {plan.price.monthly > 0 && (
+                ) : (
+                  <div className="flex items-end gap-1">
+                    <span className={`text-5xl font-extrabold ${plan.highlight ? "text-white" : "text-gray-900"}`}>
+                      ${annual ? plan.price.annual : plan.price.monthly}
+                    </span>
                     <span className={`text-sm mb-2 ${plan.highlight ? "text-indigo-200" : "text-gray-400"}`}>
                       /mo
                     </span>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
 
               <button

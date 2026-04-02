@@ -96,7 +96,7 @@ export default function Hero() {
           <div className="flex -space-x-2">
             {["bg-indigo-400","bg-purple-400","bg-pink-400","bg-blue-400","bg-green-400"].map((color, i) => (
               <div
-                key={i}
+                key={color}
                 className={`w-8 h-8 ${color} rounded-full border-2 border-white flex items-center justify-center text-white text-xs font-bold`}
               >
                 {String.fromCharCode(65 + i)}
@@ -128,7 +128,7 @@ export default function Hero() {
 
             {/* Dashboard content */}
             <div className="p-6 bg-gray-50 min-h-[400px]">
-              <div className="grid grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                 {[
                   { label: "Active Tasks", value: "24", color: "bg-indigo-500" },
                   { label: "Completed", value: "128", color: "bg-green-500" },
@@ -142,7 +142,7 @@ export default function Hero() {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {[
                   { title: "To Do", color: "bg-gray-200", tasks: ["Design new homepage", "API integration", "Write docs"] },
                   { title: "In Progress", color: "bg-indigo-500", tasks: ["Mobile app UI", "Performance audit"] },

@@ -7,12 +7,11 @@ import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import { ModalProvider } from "@/components/ModalContext";
-import Modals from "@/components/Modals";
+import ClientShell from "@/components/ClientShell";
 
 export default function Home() {
   return (
-    <ModalProvider>
+    <ClientShell>
       <main className="overflow-x-hidden">
         <Navbar />
         <Hero />
@@ -24,7 +23,6 @@ export default function Home() {
         <CTA />
         <Footer />
       </main>
-      <Modals />
-    </ModalProvider>
+    </ClientShell>
   );
 }
