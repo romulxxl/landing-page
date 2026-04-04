@@ -48,8 +48,7 @@ describe("POST /api/contact", () => {
 
   // ── Name validation ──────────────────────────────────────────────────────
   it("returns 400 when name is missing", async () => {
-    const { name: _n, ...rest } = valid;
-    const res = await POST(req(rest));
+    const res = await POST(req({ email: valid.email, message: valid.message }));
     expect(res.status).toBe(400);
   });
 
@@ -80,8 +79,7 @@ describe("POST /api/contact", () => {
 
   // ── Email validation ─────────────────────────────────────────────────────
   it("returns 400 when email is missing", async () => {
-    const { email: _e, ...rest } = valid;
-    const res = await POST(req(rest));
+    const res = await POST(req({ name: valid.name, message: valid.message }));
     expect(res.status).toBe(400);
   });
 
@@ -97,8 +95,7 @@ describe("POST /api/contact", () => {
 
   // ── Message validation ───────────────────────────────────────────────────
   it("returns 400 when message is missing", async () => {
-    const { message: _m, ...rest } = valid;
-    const res = await POST(req(rest));
+    const res = await POST(req({ name: valid.name, email: valid.email }));
     expect(res.status).toBe(400);
   });
 

@@ -12,12 +12,14 @@ import Modals from "@/components/Modals";
 
 function OpenSignup() {
   const { openSignup } = useModal();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => { openSignup(); }, []);
   return <Modals />;
 }
 
 function OpenContact() {
   const { openContact } = useModal();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => { openContact(); }, []);
   return <Modals />;
 }
