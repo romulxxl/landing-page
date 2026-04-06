@@ -39,7 +39,6 @@ export default function SocialProof() {
               transition={{ duration: 0.4, delay: i * 0.1 }}
               className="group flex items-center gap-3 grayscale hover:grayscale-0 transition-all duration-300"
             >
-              {/* Logo placeholder */}
               <div className="w-12 h-12 bg-gray-200 group-hover:bg-indigo-100 rounded-xl flex items-center justify-center text-gray-500 group-hover:text-indigo-600 font-bold text-sm transition-all duration-300">
                 {company.initials}
               </div>

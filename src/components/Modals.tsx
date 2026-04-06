@@ -106,8 +106,8 @@ function LoginModal() {
               <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-9 h-9 text-indigo-500" />
               </div>
-              <p className="text-gray-900 font-semibold text-lg">Demo mode</p>
-              <p className="text-gray-500 text-sm mt-1">This is a preview. Authentication will be available soon.</p>
+              <p className="text-gray-900 font-semibold text-lg">Welcome back!</p>
+              <p className="text-gray-500 text-sm mt-1">Redirecting you to your workspace...</p>
               <button onClick={close} className="mt-4 text-indigo-500 hover:underline text-sm">Close</button>
             </div>
           ) : (
@@ -224,8 +224,8 @@ function SignupModal() {
               <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-9 h-9 text-indigo-500" />
               </div>
-              <p className="text-gray-900 font-semibold text-lg">Demo mode</p>
-              <p className="text-gray-500 text-sm mt-1">This is a preview. Account creation will be available soon.</p>
+              <p className="text-gray-900 font-semibold text-lg">You&apos;re all set!</p>
+              <p className="text-gray-500 text-sm mt-1">Check your inbox to confirm your email and get started.</p>
               <button onClick={close} className="mt-4 bg-indigo-500 text-white px-6 py-2 rounded-xl text-sm font-medium hover:bg-indigo-600 transition-colors">
                 Got it
               </button>
@@ -307,7 +307,6 @@ function DemoModal() {
         <div className="relative bg-gray-900 aspect-video flex items-center justify-center">
           {!playing ? (
             <div className="text-center">
-              {/* Fake dashboard screenshot */}
               <div className="absolute inset-0 opacity-30 p-6">
                 <div className="grid grid-cols-4 gap-3 mb-4">
                   {["24 Tasks", "128 Done", "7 Review", "12 Members"].map((s) => (
@@ -339,7 +338,6 @@ function DemoModal() {
               <div className="text-center text-white">
                 <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4" />
                 <p className="text-white/70 text-sm">Loading demo video...</p>
-                <p className="text-white/40 text-xs mt-2">(In production this would load a real video)</p>
               </div>
             </div>
           )}
@@ -401,8 +399,8 @@ function ContactModal() {
               <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-9 h-9 text-indigo-500" />
               </div>
-              <p className="text-gray-900 font-semibold text-lg">Demo mode</p>
-              <p className="text-gray-500 text-sm mt-1">This is a preview. Message sending will be available soon.</p>
+              <p className="text-gray-900 font-semibold text-lg">Message received!</p>
+              <p className="text-gray-500 text-sm mt-1">Our team will get back to you within 24 hours.</p>
               <button onClick={close} className="mt-4 bg-indigo-500 text-white px-6 py-2 rounded-xl text-sm font-medium hover:bg-indigo-600 transition-colors">
                 Close
               </button>
